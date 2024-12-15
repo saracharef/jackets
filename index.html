@@ -1,0 +1,24 @@
+from bs4 import BeautifulSoup
+
+filename = '<SITO>.html'
+with open(filename, 'r', encoding='utf-8') as file:
+    html_content = file.read()
+
+
+soup = BeautifulSoup(html_content, 'html.parser')
+
+
+contatti_section = soup.find(lambda tag: tag.name == "section" and "contatti" in tag.get("id", "").lower())
+
+
+if contatti_section:
+    new_info = soup.new_tag('p')
+    new_info.string = "Telefono: 3791867275"
+    contatti_section.append(new_info)
+
+
+updated_filename = 'updated_SITO.html'
+with open(updated_filename, 'w', encoding='utf-8') as file:
+    file.write(str(soup))
+
+updated_filename
